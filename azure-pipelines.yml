@@ -17,30 +17,3 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
-
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'Test'
-    organization: 'sahanaumesh'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'sahanasu93_example1'
-    cliProjectName: 'example1'
-    cliSources: '.'
-
-- task: SonarCloudAnalyze@1
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
-
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)/build'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
