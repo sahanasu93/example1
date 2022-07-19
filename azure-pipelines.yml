@@ -41,9 +41,15 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/bin/webapp'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+- task: DownloadPipelineArtifact@2
+  inputs:
+    buildType: 'current'
+    artifactName: 'drop'
+    targetPath: '$(Pipeline.Workspace)'
 
 - task: ArchiveFiles@2
   inputs:
