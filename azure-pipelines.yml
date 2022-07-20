@@ -16,7 +16,7 @@ stages:
   - deployment: Build
     pool:
       vmImage: windows-latest
-  - job: 'Build'
+  - job: 'BuildS'
     displayName: 'Deploy job'
     pool:
       Azure Pipelines
