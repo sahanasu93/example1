@@ -9,52 +9,44 @@ trigger:
 pool:
   Azure Pipelines
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+- stage: 'StageA'
+  displayName: 'Build code'
+  jobs: 
+  - job: 'Build'
+    displayName: 'Build job'
+    steps:
+    - script: echo Hello, world A!
+      displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    - script: |
+        echo Add other tasks to build, test, and deploy your project.
+        echo See https://aka.ms/yaml
+      displayName: 'Run a multi-line script'
 
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'Test'
-    organization: 'sahanaumesh'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'sahanasu93_example1'
-    cliProjectName: 'example1'
-    cliSources: '.'
+  - job: 'BuildB'
+    displayName: 'Build job'
+    steps:
+    - script: echo Hello, world B!
+      displayName: 'Run a one-line script'
 
-- task: SonarCloudAnalyze@1
+- stage: 'StageB'
+  displayName: 'Build code'
+  jobs: 
+  - job: 'Build'
+    displayName: 'Build job'
+    steps:
+    - script: echo Hello, world A!
+      displayName: 'Run a one-line script'
 
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
+    - script: |
+        echo Add other tasks to build, test, and deploy your project.
+        echo See https://aka.ms/yaml
+      displayName: 'Run a multi-line script'
 
-- task: CopyFiles@2
-  inputs:
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - job: 'BuildB'
+    displayName: 'Build job'
+    steps:
+    - script: echo Hello, world B!
+      displayName: 'Run a one-line script'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-
-- task: DownloadPipelineArtifact@2
-  inputs:
-    buildType: 'current'
-    artifactName: 'drop'
-    targetPath: '$(Pipeline.Workspace)'
-
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
