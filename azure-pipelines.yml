@@ -13,8 +13,14 @@ stages:
 - stage: 'StageA'
   displayName: 'Build code'
   jobs: 
+  - deployment: Deploy
+    pool:
+      vmImage: windows-latest
+    environment: dev
   - job: 'Build'
     displayName: 'Build job'
+    pool:
+      Azure Pipelines
     steps:
     - script: echo Hello, world A!
       displayName: 'Run a one-line script'
