@@ -13,9 +13,6 @@ stages:
 - stage: 'Build'
   displayName: 'Deploy'
   jobs:
-  - deployment: Build
-    pool:
-      vmImage: windows-latest
   - job: 'BuildS'
     displayName: 'Deploy job'
     pool:
